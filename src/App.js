@@ -34,7 +34,7 @@ const sampleData = [
   },
 
   {
-    timestamp: 1579379874,
+    timestamp: 1579279874,
     letters: [
       {
         character: "A",
@@ -55,33 +55,43 @@ const sampleData = [
         avgScore: 45.0
       }
     ]
+  },
+
+  {
+    timestamp: 1579159874,
+    letters: [
+      {
+        character: "J",
+        highScore: 20.0,
+        lowScore: 10.0,
+        avgScore: 12.5
+      },
+      {
+        character: "A",
+        highScore: 66.7,
+        lowScore: 50.0,
+        avgScore: 58.9
+      },
+      {
+        character: "B",
+        highScore: 79.5,
+        lowScore: 70.0,
+        avgScore: 75.0
+      }
+    ]
   }
 ];
 
 const AppWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 50px auto 0;
+  margin: 50px auto;
   max-width: 800px;
 `;
 
 function App() {
   return (
     <AppWrapper>
-      {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header> */}
       <div>
         <Logo />
         <UserInfo name="Fake User" id="0001" />
@@ -89,7 +99,7 @@ function App() {
 
       <Summary data={sampleData} />
       <MostRecent data={sampleData} />
-      <PreviousSessions data={sampleData} />
+      <PreviousSessions data={sampleData.slice(1)} />
     </AppWrapper>
   );
 }
