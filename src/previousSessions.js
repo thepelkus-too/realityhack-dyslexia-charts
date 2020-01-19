@@ -170,7 +170,7 @@ const PreviousSession = props => (
 
 function PreviousSessions(props) {
   return (
-    <AppSection title="Previous Sessions">
+    <AppSection title="Session History">
       {props.data.map((session, i) => (
         <PreviousSession
           session={session}
