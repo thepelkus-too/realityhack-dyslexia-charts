@@ -29,7 +29,15 @@ const allLettersFromSessionList = data => {
 
   const firstSix = uniqued.slice(0, 6);
 
-  return firstSix;
+  const mappedToPercentage = firstSix.map(letter => {
+    letter.highScore /= 100;
+    letter.avgScore /= 100;
+    letter.lowScore /= 100;
+
+    return letter;
+  });
+
+  return mappedToPercentage;
 };
 
 const MostRecentWrapper = styled.div`
@@ -104,7 +112,7 @@ function MostRecent(props) {
           text-anchor="middle"
           style={{ font: "italic 13px sans-serif" }}
         >
-          {Math.round(something.value)}%
+          {Math.round(something.value * 100)}%
         </text>
       </g>
     );
