@@ -161,7 +161,7 @@ function MostRecent(props) {
                   dataKey="character"
                   interval={0}
                   padding={{ left: 30, right: 30 }}
-                  tick={{ fontSize: 10 }}
+                  tick={{ fontSize: 20 }}
                 />
                 <YAxis
                   domain={domain}
