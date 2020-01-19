@@ -13,6 +13,7 @@ import {
 
 const allLettersFromSessionList = data => {
   let letters = [];
+
   for (let session of data) {
     letters = [...letters, ...session.letters];
   }
@@ -30,11 +31,13 @@ const allLettersFromSessionList = data => {
   const firstSix = uniqued.slice(0, 6);
 
   const mappedToPercentage = firstSix.map(letter => {
-    letter.highScore /= 100;
-    letter.avgScore /= 100;
-    letter.lowScore /= 100;
+    const copied = { ...letter };
 
-    return letter;
+    copied.highScore /= 100;
+    copied.avgScore /= 100;
+    copied.lowScore /= 100;
+
+    return copied;
   });
 
   return mappedToPercentage;

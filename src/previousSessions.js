@@ -36,6 +36,8 @@ const sessionAverage = session => {
 
   const size = session.letters.length;
 
+  console.log(sum / size);
+
   return Math.round(sum / size);
 };
 

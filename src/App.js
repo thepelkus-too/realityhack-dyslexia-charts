@@ -23,6 +23,49 @@ const Loading = styled.div`
   justify-content: center;
 `;
 
+const highScoreFromAttempts = attempts =>
+  attempts.reduce((acc, attempt) => {
+    if (attempt.score > acc) return attempt.score;
+
+    return acc;
+  }, 0);
+
+const lowScoreFromAttempts = attempts =>
+  attempts.reduce((acc, attempt) => {
+    if (attempt.score < acc) return attempt.score;
+
+    return acc;
+  }, 101);
+
+const avgScoreFromAttempts = attempts =>
+  attempts.reduce((acc, attempt) => {
+    return acc + attempt.score / attempts.length;
+  }, 0);
+
+const convertData = data => {
+  data = data.map(session => {
+    let convertedSession = {};
+
+    convertedSession.timestamp = session.dateTime;
+
+    convertedSession.letters = session.letterRounds.map(round => {
+      const almostLetter = {};
+
+      almostLetter.timestamp = convertedSession.timestamp;
+      almostLetter.character = round.letter;
+      almostLetter.highScore = highScoreFromAttempts(round.attempts) * 100;
+      almostLetter.lowScore = lowScoreFromAttempts(round.attempts) * 100;
+      almostLetter.avgScore = avgScoreFromAttempts(round.attempts) * 100;
+
+      return almostLetter;
+    });
+
+    return convertedSession;
+  });
+
+  return data;
+};
+
 function App() {
   const [data, setData] = useState(undefined);
 
@@ -36,11 +79,13 @@ function App() {
 
       const sessions = Object.values(json);
 
-      sessions.sort((a, b) => {
+      const converted = convertData(sessions);
+
+      converted.sort((a, b) => {
         return b.timestamp - a.timestamp;
       });
 
-      setData(sessions);
+      setData(converted);
     };
 
     fetchData();
