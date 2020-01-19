@@ -93,9 +93,13 @@ function MostRecent(props) {
   const ticks = [0, 0.25, 0.5, 0.75, 1];
   const toPercent = something => something * 100 + "%";
 
-  const dot = (cf, cb) => something => {
+  const dot = (cf, cb, yOffset) => something => {
+    if (!yOffset) {
+      yOffset = 0;
+    }
+
     const newX = something.cx;
-    const newY = something.cy + 8;
+    const newY = something.cy + 8 + yOffset;
     return (
       <g>
         <rect
@@ -135,22 +139,23 @@ function MostRecent(props) {
               <LineChart data={recentLetterData}>
                 <Line
                   type="monotone"
-                  dataKey="highScore"
+                  dataKey="lowScore"
                   strokeWidth="0"
-                  dot={dot("#1baf44", "#d3f8dd")}
+                  dot={dot("#d93c3c", "#f7d4d4", 4)}
                 />
                 <Line
                   type="monotone"
                   dataKey="avgScore"
                   strokeWidth="0"
-                  dot={dot("#494a7e", "#dfe0ec")}
+                  dot={dot("#494a7e", "#dfe0ec", 2)}
                 />
                 <Line
                   type="monotone"
-                  dataKey="lowScore"
+                  dataKey="highScore"
                   strokeWidth="0"
-                  dot={dot("#d93c3c", "#f7d4d4")}
+                  dot={dot("#1baf44", "#d3f8dd")}
                 />
+
                 <CartesianGrid strokeDasharray="2 2" />
                 <XAxis
                   dataKey="character"
