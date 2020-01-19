@@ -43,6 +43,63 @@ const SummaryPercentage = styled.div`
   color: #494a7e;
 `;
 
+const dateFromTimestamp = ts => {
+  const sessionDate = new Date(ts * 1000);
+  return `${sessionDate.getUTCMonth() +
+    1}/${sessionDate.getUTCDate()}/${sessionDate.getUTCFullYear()}`;
+};
+
+const dateRangeFromData = data => {
+  let startDate;
+  let endDate;
+
+  let earliestTimestamp = Number.MAX_SAFE_INTEGER;
+  let latestTimestamp = Number.MIN_SAFE_INTEGER;
+
+  for (let session of data) {
+    if (session.timestamp > latestTimestamp)
+      latestTimestamp = session.timestamp;
+    if (session.timestamp < earliestTimestamp)
+      earliestTimestamp = session.timestamp;
+  }
+
+  startDate = dateFromTimestamp(earliestTimestamp);
+  endDate = dateFromTimestamp(latestTimestamp);
+
+  return `${startDate} - ${endDate}`;
+};
+
+const avgFromData = data => {
+  let count = 0;
+  const avgSum = data.reduce((dataAcc, session) => {
+    return (
+      dataAcc +
+      session.letters.reduce((sessAcc, letter) => {
+        count++;
+        return sessAcc + letter.avgScore;
+      }, 0)
+    );
+  }, 0);
+
+  return Math.round(avgSum / count);
+};
+
+const chartDataFromData = data => {
+  return data.map(session => {
+    let name;
+    let avg;
+
+    name = dateFromTimestamp(session.timestamp);
+
+    avg =
+      session.letters.reduce((sessAcc, letter) => {
+        return sessAcc + letter.avgScore / session.letters.length;
+      }, 0) / 100;
+
+    return { name: name, avg: avg };
+  });
+};
+
 function Summary(props) {
   const domain = [0, 1];
   const ticks = [0, 0.25, 0.5, 0.75, 1];
@@ -56,13 +113,13 @@ function Summary(props) {
             <SummaryHeader>
               Avg. Proficiency Overall
               <br />
-              12/20/2019 - 01/20/2018
+              {dateRangeFromData(props.data)}
             </SummaryHeader>
-            <SummaryPercentage>82%</SummaryPercentage>
+            <SummaryPercentage>{avgFromData(props.data)}%</SummaryPercentage>
           </SummaryData>
 
           <ResponsiveContainer width="100%" height={182}>
-            <LineChart data={data}>
+            <LineChart data={chartDataFromData(props.data)}>
               <Line type="monotone" dataKey="avg" stroke="#8884d8" />
               <CartesianGrid strokeDasharray="2 2" />
               <XAxis

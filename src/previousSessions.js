@@ -4,7 +4,6 @@ import ContentCapsule from "./contentCapsule";
 import styled from "styled-components";
 
 const leastSuccessfulFromSession = session => {
-  console.log(session.letters);
   const least = session.letters.reduce(
     (acc, letter) => {
       if (letter.lowScore < acc.lowScore) return letter;

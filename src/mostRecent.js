@@ -29,8 +29,6 @@ const allLettersFromSessionList = data => {
 
   const firstSix = uniqued.slice(0, 6);
 
-  console.log(firstSix);
-
   return firstSix;
 };
 
@@ -85,7 +83,6 @@ function MostRecent(props) {
   const toPercent = something => something * 100 + "%";
 
   const dot = (cf, cb) => something => {
-    console.log(something);
     const newX = something.cx;
     const newY = something.cy + 8;
     return (

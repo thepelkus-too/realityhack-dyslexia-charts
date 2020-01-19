@@ -40,8 +40,6 @@ function App() {
         return b.timestamp - a.timestamp;
       });
 
-      console.log(sessions);
-
       setData(sessions);
     };
 
