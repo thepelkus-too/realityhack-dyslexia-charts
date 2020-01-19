@@ -36,8 +36,6 @@ const sessionAverage = session => {
 
   const size = session.letters.length;
 
-  console.log(sum / size);
-
   return Math.round(sum / size);
 };
 
@@ -143,7 +141,7 @@ const SessionHighLow = props => {
         <ScoresDataDatums>
           <ScoresLetter>{lowScoreData.character}</ScoresLetter>
           <ScoresWorstPercentage>
-            {lowScoreData.lowScore}%
+            {Math.round(lowScoreData.lowScore)}%
           </ScoresWorstPercentage>
         </ScoresDataDatums>
       </ScoresData>
